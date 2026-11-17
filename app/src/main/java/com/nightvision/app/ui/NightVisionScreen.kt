@@ -66,6 +66,7 @@ import com.nightvision.app.storage.GallerySaver
 import com.nightvision.app.ui.components.BottomControlDeck
 import com.nightvision.app.ui.components.CameraPermissionScreen
 import com.nightvision.app.ui.components.GlassObsidian
+import com.nightvision.app.ui.components.PresetsModal
 import com.nightvision.app.ui.components.ProControlsDrawer
 import com.nightvision.app.ui.components.TacticalReticle
 import com.nightvision.app.ui.components.TopTelemetryBar
@@ -148,6 +149,8 @@ private fun NightVisionCameraView(modifier: Modifier = Modifier) {
     var currentMode by remember { mutableStateOf(EnhancementMode.AI_LOW_LIGHT) }
     var settings by remember { mutableStateOf(ManualCameraSettings()) }
     var proDrawerOpen by remember { mutableStateOf(false) }
+    var presetsModalOpen by remember { mutableStateOf(false) }
+    var activePresetId by remember { mutableStateOf<String?>("dim_indoor") }
     var captureState by remember { mutableStateOf<CaptureState>(CaptureState.Idle) }
     var lastPhotoUri by remember { mutableStateOf<Uri?>(null) }
     var lastThumbnail by remember { mutableStateOf<ImageBitmap?>(null) }
@@ -288,6 +291,9 @@ private fun NightVisionCameraView(modifier: Modifier = Modifier) {
                 settings = updated
                 renderer.updateSettings(updated)
             },
+            onOpenPresets = {
+                presetsModalOpen = true
+            },
             modifier = Modifier.align(Alignment.TopCenter)
         )
 
@@ -404,6 +410,34 @@ private fun NightVisionCameraView(modifier: Modifier = Modifier) {
                     .padding(bottom = 178.dp)
             )
         }
+
+        PresetsModal(
+            visible = presetsModalOpen,
+            activePresetId = activePresetId,
+            onSelectPreset = { preset ->
+                activePresetId = preset.id
+                currentMode = preset.mode
+                val updated = settings.copy(
+                    autoMode = preset.autoMode,
+                    iso = preset.iso.coerceIn(settings.isoRange),
+                    exposureTimeNs = preset.exposureTimeNs.coerceIn(settings.exposureRangeNs),
+                    digitalGain = preset.digitalGain,
+                    contrast = preset.contrast,
+                    torchEnabled = preset.torchEnabled,
+                    reticleEnabled = preset.reticleEnabled,
+                    scanlinesEnabled = preset.scanlinesEnabled
+                )
+                settings = updated
+                cameraController.setMode(preset.mode)
+                cameraController.applySettings(updated)
+                cameraController.setTorchEnabled(preset.torchEnabled)
+                renderer.setMode(preset.mode)
+                renderer.updateSettings(updated)
+                presetsModalOpen = false
+                statusBanner = "PRESET: ${preset.title.uppercase()}"
+            },
+            onDismiss = { presetsModalOpen = false }
+        )
     }
 }
 

@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.CenterFocusStrong
 import androidx.compose.material.icons.rounded.FlashlightOff
 import androidx.compose.material.icons.rounded.FlashlightOn
@@ -77,6 +78,7 @@ fun TopTelemetryBar(
     onToggleTorch: () -> Unit,
     onToggleReticle: () -> Unit,
     onToggleScanlines: () -> Unit,
+    onOpenPresets: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val accent = modeAccentColor(mode)
@@ -173,6 +175,13 @@ fun TopTelemetryBar(
                 active = settings.scanlinesEnabled,
                 accentColor = accent,
                 onClick = onToggleScanlines
+            )
+            HudToggleButton(
+                icon = Icons.Rounded.AutoAwesome,
+                contentDescription = "Use Cases & Presets",
+                active = false,
+                accentColor = accent,
+                onClick = onOpenPresets
             )
         }
     }
