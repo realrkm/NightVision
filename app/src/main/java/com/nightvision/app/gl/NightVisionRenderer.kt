@@ -23,7 +23,7 @@ import kotlin.math.roundToInt
 
 /**
  * OpenGL ES 3.0 GLSurfaceView.Renderer that consumes CameraX frames via an external OES
- * SurfaceTexture and applies real-time night-vision, thermal, monochrome, or AI-enhanced shaders.
+ * SurfaceTexture and applies real-time night-vision, monochrome, or AI-enhanced shaders.
  */
 class NightVisionRenderer(
     private val onSurfaceTextureAvailable: (SurfaceTexture) -> Unit,
@@ -311,8 +311,7 @@ class NightVisionRenderer(
         val modeInt = when (currentMode) {
             EnhancementMode.AI_LOW_LIGHT -> 0
             EnhancementMode.GREEN_NIGHT_VISION -> 1
-            EnhancementMode.THERMAL -> 2
-            EnhancementMode.HIGH_CONTRAST_BW -> 3
+            EnhancementMode.HIGH_CONTRAST_BW -> 2
         }
         GLES30.glUniform1i(oesModeLoc, modeInt)
         GLES30.glUniform1f(oesGainLoc, digitalGain)

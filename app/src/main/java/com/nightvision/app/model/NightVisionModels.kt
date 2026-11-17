@@ -3,7 +3,6 @@ package com.nightvision.app.model
 enum class EnhancementMode(val label: String, val shortTag: String) {
     AI_LOW_LIGHT("AI Low-Light", "AI"),
     GREEN_NIGHT_VISION("Night Vision", "NVG"),
-    THERMAL("Thermal", "IR"),
     HIGH_CONTRAST_BW("Mono Boost", "B&W")
 }
 

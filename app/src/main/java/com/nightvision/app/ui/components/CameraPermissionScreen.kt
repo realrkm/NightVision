@@ -92,7 +92,7 @@ fun CameraPermissionScreen(
                     text = if (shouldShowRationale) {
                         "NightVision requires camera access to stream frames through the OpenGL ES 3.0 night-vision shaders and Zero-DCE++ AI low-light enhancer."
                     } else {
-                        "Grant camera access to activate real-time AI low-light enhancement, phosphor night vision, and thermal imaging."
+                        "Grant camera access to activate real-time AI low-light enhancement, phosphor night vision, and monochrome boost."
                     },
                     color = TextSecondary,
                     fontSize = 14.sp,

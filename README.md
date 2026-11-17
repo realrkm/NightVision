@@ -6,10 +6,9 @@ A real-time low-light camera and tactical night-vision Android application built
 
 ## Features
 
-- **4 Real-Time Enhancement Modes**
+- **3 Real-Time Enhancement Modes**
   - **AI Low-Light (`AI`)**: On-device Zero-DCE neural low-light enhancement (`zero_dce_lite.tflite`, 512×512 FP32, GPU-accelerated when available) blended with live camera feed in OpenGL ES 3.0.
   - **Night Vision (`NVG`)**: Classic phosphor-emerald (`#00FF88`) night-vision shader with digital gain, contrast shaping, and toggleable CRT scanlines.
-  - **Thermal (`IR`)**: False-color thermal palette mapping luminance gradients to tactical amber/heat tones.
   - **Mono Boost (`B&W`)**: High-contrast monochrome luminance boost for crisp low-light detail.
 - **Hybrid Camera2 Control**:
   - Automatic low-light AE boost or full **Manual Mode** via `Camera2Interop` (ISO, Shutter Speed, Digital Gain, Contrast).

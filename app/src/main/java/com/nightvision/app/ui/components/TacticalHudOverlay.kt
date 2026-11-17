@@ -49,12 +49,10 @@ import kotlin.math.roundToInt
 val GlassObsidian = Color(0xBD080B0E)
 val GlassHairline = Color(0x24FFFFFF)
 val AccentEmerald = Color(0xFF00FF88)
-val AccentThermal = Color(0xFFFF9F1C)
 
 fun modeAccentColor(mode: EnhancementMode): Color = when (mode) {
     EnhancementMode.AI_LOW_LIGHT -> AccentEmerald
     EnhancementMode.GREEN_NIGHT_VISION -> AccentEmerald
-    EnhancementMode.THERMAL -> AccentThermal
     EnhancementMode.HIGH_CONTRAST_BW -> IceCyan
 }
 

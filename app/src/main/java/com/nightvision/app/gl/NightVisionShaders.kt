@@ -36,7 +36,7 @@ in vec2 vTexCoord;
 in vec2 vScreenUv;
 
 uniform samplerExternalOES uCameraTex;
-uniform int uMode;          // 0 = AI fallback, 1 = NVG Green, 2 = Thermal, 3 = Mono Boost
+uniform int uMode;          // 0 = AI fallback, 1 = NVG Green, 2 = Mono Boost
 uniform float uGain;
 uniform float uContrast;
 uniform int uScanlines;
@@ -54,19 +54,6 @@ vec3 applyContrast(vec3 c, float contrast) {
 
 float applyContrastScalar(float v, float contrast) {
     return clamp((v - 0.5) * contrast + 0.5, 0.0, 1.0);
-}
-
-vec3 ironbowPalette(float t) {
-    vec3 c0 = vec3(0.03, 0.02, 0.10);
-    vec3 c1 = vec3(0.38, 0.04, 0.46);
-    vec3 c2 = vec3(0.86, 0.18, 0.10);
-    vec3 c3 = vec3(0.99, 0.72, 0.06);
-    vec3 c4 = vec3(1.00, 0.98, 0.88);
-
-    if (t < 0.25) return mix(c0, c1, t / 0.25);
-    if (t < 0.50) return mix(c1, c2, (t - 0.25) / 0.25);
-    if (t < 0.75) return mix(c2, c3, (t - 0.50) / 0.25);
-    return mix(c3, c4, (t - 0.75) / 0.25);
 }
 
 void main() {
@@ -101,13 +88,6 @@ void main() {
 
         fragColor = vec4(nvg, 1.0);
     } else if (uMode == 2) {
-        // THERMAL: ironbow/inferno false-color heat palette
-        float luma = luminance(src);
-        float lifted = pow(clamp(luma * uGain, 0.0, 1.0), 0.82);
-        float heat = applyContrastScalar(lifted, uContrast);
-        vec3 thermal = ironbowPalette(heat);
-        fragColor = vec4(thermal, 1.0);
-    } else if (uMode == 3) {
         // HIGH_CONTRAST_BW: crisp monochrome low-light boost with shadow lift
         float luma = luminance(src);
         float lifted = pow(clamp(luma * uGain, 0.0, 1.0), 0.68);
