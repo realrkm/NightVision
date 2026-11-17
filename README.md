@@ -17,8 +17,26 @@ A real-time low-light camera and tactical night-vision Android application built
   - Live telemetry pill displaying **FPS**, **ISO**, **Shutter Speed**, and **AI inference latency (ms)**.
   - Toggleable vector **Tactical Reticle** (center crosshair, rangefinder ticks, corner brackets) and **Scanlines**.
   - Expandable **Pro Controls Drawer** for fine-grained Camera2 and shader tuning.
+- **Use Cases & Presets Modal**:
+  - One-tap **Use Cases & Presets** dialog (`PresetsModal`) in the top HUD bar explaining the ideal real-world situation and applying optimal mode, ISO, shutter, gain, contrast, reticle, scanline, and torch settings.
 - **Instant Photo Capture**:
   - Captures the exact enhanced OpenGL ES 3.0 framebuffer (`glReadPixels`) and saves high-quality JPEGs to `Pictures/NightVision` via `MediaStore`, with a tappable gallery thumbnail preview.
+
+---
+
+## Use Cases & Presets
+
+Open the **Use Cases & Presets** modal (sparkle icon in the top HUD bar) to view ideal scenarios and apply a tuned configuration in one tap:
+
+| Preset | Mode | Ideal Situation | Key Settings |
+| :--- | :--- | :--- | :--- |
+| **Dim Room Recovery** | `AI Low-Light` | Indoors at night, hallways, basements, or rooms with faint ambient light | Auto AE, Gain `1.4x`, Contrast `1.15`, Torch OFF |
+| **Outdoor Trail & Recon** | `Night Vision` | Moonlit trails, backyards, campsites, or distant streetlamp environments | Auto AE, Gain `1.9x`, Contrast `1.35`, Reticle + Scanlines ON |
+| **Ultra-Dark Still Shot** | `AI Low-Light` | Near-pitch-black stationary scenes when bracing the phone on a surface or tripod | Manual ISO `3200`, `1/10s` shutter, Gain `1.8x`, Reticle ON |
+| **Lens Glint & Edge Scan** | `Mono Boost` | Inspecting dark corners, vents, or objects for reflective glints and fine textures | Manual ISO `800`, `1/30s`, Gain `1.7x`, Contrast `1.65`, Torch ON |
+| **Power Outage Utility** | `Mono Boost` | Reading breaker panels, finding dropped items, or navigating zero-light rooms | Auto AE, Gain `1.3x`, Contrast `1.30`, Torch ON |
+
+> **Physical Limitation Note:** Smartphone cameras still require some ambient light or the built-in **Torch** to see in 100% pitch-black rooms, and standard rear cameras include an IR-cut filter that blocks most thermal/infrared radiation.
 
 ---
 
@@ -51,7 +69,7 @@ A real-time low-light camera and tactical night-vision Android application built
 ```
 
 ### Key Packages
-- `com.nightvision.app.model` — Shared state models (`EnhancementMode`, `CameraTelemetry`, `ManualCameraSettings`, `CaptureState`).
+- `com.nightvision.app.model` — Shared state models (`EnhancementMode`, `CameraTelemetry`, `ManualCameraSettings`, `CaptureState`, `NightVisionPreset`, `NightVisionPresets`).
 - `com.nightvision.app.camera` — `NightVisionCameraController` (CameraX + `Camera2Interop`).
 - `com.nightvision.app.gl` — `NightVisionRenderer` (OpenGL ES 3.0 OES + 2D AI texture shaders & frame capture).
 - `com.nightvision.app.ml` — `ZeroDceEnhancer` (TensorFlow Lite Zero-DCE inference).
